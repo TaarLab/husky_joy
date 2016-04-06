@@ -11,7 +11,7 @@ sudo apt-get install ros-indigo-husky-desktop
 sudo apt-get install ros-indigo-husky-simulator
 
 --
-$ git clone https://github.com/TaarLab/husky_joy
+$ git clone https://github.com/TaarLab/husky_joy.git
 
 In launch directory:
   
