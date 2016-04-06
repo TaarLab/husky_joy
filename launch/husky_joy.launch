@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<launch>
+ <!-- Gazebo Husky Node-->
+  <arg name="world_name" default="worlds/empty.world"/>
+
+  <arg name="laser_enabled" default="true"/>
+  <arg name="ur5_enabled" default="false"/>
+  <arg name="kinect_enabled" default="false"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world_name)"/> <!-- world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <include file="$(find husky_gazebo)/launch/spawn_husky.launch">
+    <arg name="laser_enabled" value="$(arg laser_enabled)"/>
+    <arg name="ur5_enabled" value="$(arg ur5_enabled)"/>
+    <arg name="kinect_enabled" value="$(arg kinect_enabled)"/>
+  </include>
+
+<!-- joy node -->
+    <node respawn="true" pkg="joy" type="joy_node" name="joy_husky_commands" >
+    <param name="dev" type="string" value="/dev/input/js1" />
+    <param name="deadzone" value="0.12" />
+  </node>
+ <!-- Axes -->
+  <param name="axis_linear" value="1" type="int"/>
+  <param name="axis_angular" value="0" type="int"/>
+  <param name="scale_linear" value="2" type="double"/>
+  <param name="scale_angular" value="2" type="double"/>
+  <node pkg="husky_joy" type="husky1_joy" name="teleop_husky"/>
+
+</launch>
